@@ -1,18 +1,22 @@
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
+import { PageLoader } from "./components/Loader";
 import NavBar from "./components/NavBar";
 
-import BoxiconsPage from "./pages/Boxicons";
-import FontAwesomePage from "./pages/FontAwesome";
+const BoxiconsPage = lazy(() => import("./pages/Boxicons"));
+const FontAwesomePage = lazy(() => import("./pages/FontAwesome"));
 
 const App = () => {
-  return (  
+  return (
     <>
       <NavBar />
-      <Routes>
-        <Route path="boxicons" element={<BoxiconsPage />} />
-        <Route path="font-awesome" element={<FontAwesomePage />} />
-      </Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="boxicons" element={<BoxiconsPage />} />
+          <Route path="font-awesome" element={<FontAwesomePage />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };

@@ -1,24 +1,12 @@
-import { Box, Grid, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Text, useColorModeValue } from "@chakra-ui/react";
+import { lazy, Suspense } from "react";
 
-import IconInstance from "../../components/IconInstance";
 import { Boxicons } from "../../components/Icons";
+import { SectionLoader } from "../../components/Loader";
 
-import { icons } from "./icons";
+const IconsList = lazy(() => import("./IconsList"));
 
 const BoxiconsPage = () => {
-  const getPrefix = (type: string) => {
-    switch (type) {
-      case "SOLID":
-        return "bxs";
-      case "REGULAR":
-        return "bx";
-      case "LOGO":
-        return "bxl";
-      default:
-        return "bx";
-    }
-  };
-
   return (
     <Box
       px={{
@@ -59,23 +47,9 @@ const BoxiconsPage = () => {
           developers
         </Text>
       </Box>
-      <Grid
-        templateColumns={{
-          base: "repeat(3,minmax(3rem,1fr))",
-          md: "repeat(4,minmax(4rem,1fr))",
-          lg: "repeat(8,minmax(4.5rem,1fr))",
-        }}
-        gap={2}
-        my={24}
-      >
-        {icons.map((icon) => (
-          <IconInstance
-            key={icon._id}
-            className={`bx ${getPrefix(icon.type_of_icon)}-${icon.name}`}
-            name={icon.name}
-          />
-        ))}
-      </Grid>
+      <Suspense fallback={<SectionLoader />}>
+        <IconsList />
+      </Suspense>
     </Box>
   );
 };

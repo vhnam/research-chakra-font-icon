@@ -2,12 +2,15 @@ import {
   Box,
   Button,
   Flex,
+  Link,
+  Stack,
   Text,
   useBreakpointValue,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { Link as RouterLink } from "react-router-dom";
 
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -31,9 +34,29 @@ const NavBar = () => {
         >
           Usage as a Font Icon
         </Text>
-        <Button onClick={toggleColorMode}>
-          {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-        </Button>
+        <Stack alignItems="center" direction="row" spacing={4}>
+          <Link
+            as={RouterLink}
+            to="/boxicons"
+            _hover={{
+              textDecoration: "none",
+            }}
+          >
+            BoxIcons
+          </Link>
+          <Link
+            as={RouterLink}
+            to="/font-awesome"
+            _hover={{
+              textDecoration: "none",
+            }}
+          >
+            Font Awesome
+          </Link>
+          <Button onClick={toggleColorMode}>
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          </Button>
+        </Stack>
       </Flex>
     </Box>
   );
